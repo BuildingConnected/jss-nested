@@ -52,9 +52,10 @@ export default function jssNested({warn = consoleWarn} = {}) {
 
     for (const prop in rule.style) {
       const isNested = prop[0] === '&'
+      const isGlobal = prop[0] === '.'
       const isNestedConditional = prop[0] === '@'
 
-      if (!isNested && !isNestedConditional) continue
+      if (!isNested && !isNestedConditional && !isGlobal) continue
 
       if (options) options = {...options, index: options.index + 1}
       else {
@@ -69,7 +70,7 @@ export default function jssNested({warn = consoleWarn} = {}) {
         }
       }
 
-      if (isNested) {
+      if (isNested || isGlobal) {
         // Lazily create the ref replacer function just once for all nested rules within
         // the sheet.
         if (!replaceRef) replaceRef = getReplaceRef(container)

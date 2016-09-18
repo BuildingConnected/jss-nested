@@ -12,6 +12,34 @@ describe('jss-nested', () => {
     jss = create().use(nested({warn: noWarn}))
   })
 
+  describe('nesting a global parent reference', () => {
+    let sheet
+
+    beforeEach(() => {
+      sheet = jss.createStyleSheet({
+        child: {
+          color: 'red',
+          '.parent &': {color: 'blue'}
+        }
+      })
+    })
+
+    it('should add rules', () => {
+      expect(sheet.getRule('child')).to.not.be(undefined)
+    })
+
+    it('should generate correct CSS', () => {
+      expect(sheet.toString()).to.be(
+        '.child-1827174828 {\n' +
+        '  color: red;\n' +
+        '}\n' +
+        '.parent .child-1827174828 {\n' +
+        '  color: blue;\n' +
+        '}'
+      )
+    })
+  })
+
   describe('nesting with space', () => {
     let sheet
 
