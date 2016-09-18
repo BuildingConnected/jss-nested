@@ -1,5 +1,5 @@
 {
-  "name": "jss-nested",
+  "name": "@buildingconnected/jss-nested",
   "description": "JSS plugin that enables support for nested selectors",
   "version": "2.5.0",
   "author": {
